@@ -18,6 +18,7 @@ npm run dev
 
 ## Configuration
 
-| file      | use                        |
-| --------- | -------------------------- |
-| config.js | General game configuration |
+| file              | use                        |
+| ----------------- | -------------------------- |
+| config.js         | General game configuration |
+| data/companies.js | Companies configuration    |

@@ -3,20 +3,23 @@ import { Flex, Box, Button } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import { GameDispatch, GameState } from "../containers/Container";
 import { motion, useAnimation } from "framer-motion";
+import config from "../config";
 
 const companies = {
   Lemon: {
     production_time: 1000,
     unit_price: 1,
-    company_purchase_price: 0, // price at which additional companies can be purchased
-    company_price: 4, // price of individual company
+    company_purchase_cost: 0, // price at which additional companies can be purchased
+    company_branch_cost: 4, // price of individual company
+    company_branch_cost_multiplier: 1.05,
     company_level_count: 25,
   },
   News: {
     production_time: 3000,
     unit_price: 60,
-    company_purchase_price: 10,
-    company_price: 69,
+    company_purchase_cost: 10,
+    company_branch_cost_multiplier: 1.1,
+    company_branch_cost: 69,
     company_level_count: 30,
   },
 };
@@ -27,6 +30,8 @@ const reducer = (state, action) => {
       return { ...state, selling: action.payload };
     case "buy_company":
       return { ...state, purchased: true };
+    case "buy_branch":
+      return { ...state, branches: state.branches + 1 };
     default:
       throw new Error();
   }
@@ -35,40 +40,47 @@ const reducer = (state, action) => {
 const Company = ({
   name,
   unit_price,
-  company_purchase_price,
-  company_price,
+  company_purchase_cost,
+  company_branch_cost,
+  company_branch_cost_multiplier,
   production_time,
 }) => {
   const gameDispatch = useContext(GameDispatch);
   const gameState = useContext(GameState);
 
   const [state, dispatch] = useReducer(reducer, {
-    company_count: 1,
-    aggregate_cost: unit_price, // price to buy single unit
+    branches: 1,
+    // aggregate_cost: unit_price, // price to buy single unit
     selling: false,
     purchased: false,
   });
 
-  const sellTimeout = useRef(null);
   const animationControl = useAnimation();
 
   useEffect(() => {
     if (state.purchased) {
-      gameDispatch({ type: "buy_company", payload: company_purchase_price });
+      gameDispatch({ type: "debit", payload: company_purchase_cost });
     }
   }, [state.purchased]);
 
-  const sell = () => {
+  const branchCost =
+    state.branches * company_branch_cost * company_branch_cost_multiplier;
+
+  const aggregateCost = state.branches * unit_price;
+
+  const sell = async () => {
     dispatch({ type: "selling", payload: true });
-    animationControl.start({
+    await animationControl.start({
       transition: { duration: production_time / 1000 },
       scaleX: [0, 1],
     });
-    sellTimeout.current = window.setTimeout(() => {
-      dispatch({ type: "selling", payload: false });
-      gameDispatch({ type: "sold", payload: state.aggregate_cost });
-      sellTimeout.current = null;
-    }, production_time);
+    dispatch({ type: "selling", payload: false });
+    gameDispatch({ type: "credit", payload: aggregateCost });
+  };
+
+  const buyBranch = (cost) => {
+    dispatch({ type: "buy_branch" });
+    gameDispatch({ type: "debit", payload: branchCost });
   };
 
   return (
@@ -76,28 +88,23 @@ const Company = ({
       {!state.purchased ? (
         <Box borderWidth="1px">
           <Button
-            // borderWidth="1px"
-            disabled={gameState.balance < company_purchase_price ? true : false}
+            disabled={gameState.balance < company_purchase_cost}
             onClick={() => dispatch({ type: "buy_company" })}
           >
-            Buy {name} Corp for {company_purchase_price}
+            Buy {name} Corp for {company_purchase_cost}
           </Button>
         </Box>
       ) : (
         <Flex borderWidth="1px">
           <Box p="2">
-            <Button
-              borderWidth="1px"
-              onClick={sell}
-              disabled={state.selling ? true : false}
-            >
+            <Button borderWidth="1px" onClick={sell} disabled={state.selling}>
               {name} <br />
-              {state.company_count}
+              {state.branches}
             </Button>
           </Box>
           <Box p="2">
             <Box borderWidth="1px">
-              {state.aggregate_cost}
+              {aggregateCost}
               <br />
               <motion.div
                 duration="3"
@@ -109,14 +116,12 @@ const Company = ({
               />
             </Box>
             <Flex>
-              <Button>
+              <Button
+                disabled={gameState.balance < branchCost}
+                onClick={() => buyBranch(branchCost)}
+              >
                 Buy 1x
-                <NumberFormat
-                  value={company_price}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  prefix={"$"}
-                ></NumberFormat>
+                <NumberFormat value={branchCost} {...config.numberFormat} />
               </Button>
               <Box>
                 {/* Todo: countdown */}

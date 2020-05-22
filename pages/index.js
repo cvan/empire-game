@@ -2,8 +2,8 @@ import Head from "next/head";
 import Balance from "../components/Balance";
 import Companies from "../components/Companies";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
-import { theme, Box } from "@chakra-ui/core";
-import React, { createContext, useContext, useReducer } from "react";
+import { theme } from "@chakra-ui/core";
+import React from "react";
 
 import Container from "../containers/Container";
 

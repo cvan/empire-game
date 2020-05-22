@@ -9,9 +9,9 @@ export const GameDispatch = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "sold":
+    case "credit":
       return { ...state, balance: state.balance + action.payload };
-    case "buy_company":
+    case "debit":
       return { ...state, balance: state.balance - action.payload };
     default:
       throw new Error();

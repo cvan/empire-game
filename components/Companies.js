@@ -1,4 +1,10 @@
-import React, { useReducer, useContext, useEffect } from "react";
+import React, {
+  useReducer,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { Flex, Box, Button, Progress } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import { GameDispatch, GameState } from "../containers/Container";
@@ -12,12 +18,12 @@ const companies = {
     company_purchase_cost: 0, // price at which additional companies can be purchased
     company_branch_cost: 4, // price of individual company
     company_branch_cost_multiplier: 1.05,
-    branch_level_up_count: 10,
+    branch_level_up_count: 5,
   },
   News: {
     production_time: 3000,
-    unit_price: 60,
-    company_purchase_cost: 10,
+    unit_price: 600,
+    company_purchase_cost: 5,
     company_branch_cost_multiplier: 1.1,
     company_branch_cost: 69,
     branch_level_up_count: 30,
@@ -50,7 +56,6 @@ const Company = ({
 }) => {
   const gameDispatch = useContext(GameDispatch);
   const gameState = useContext(GameState);
-
   const [state, dispatch] = useReducer(reducer, {
     branches: 1,
     level: 1,
@@ -58,34 +63,52 @@ const Company = ({
     purchased: false,
   });
 
-  const animationControl = useAnimation();
-
   useEffect(() => {
     if (state.purchased) {
       gameDispatch({ type: "debit", payload: company_purchase_cost });
     }
   }, [state.purchased]);
 
-  const branchCost =
-    state.branches * company_branch_cost * company_branch_cost_multiplier;
+  const duration = production_time / state.level / 1000;
+  const countdownInterval = useRef(null);
+  const [countdown, setCountdown] = useState(duration);
 
+  useEffect(() => setCountdown(duration), [state.level]);
+
+  useEffect(() => {
+    if (state.selling) {
+      countdownInterval.current = setInterval(() => {
+        setCountdown((prevState) => prevState - 1);
+      }, 1000);
+    } else {
+      if (countdownInterval.current !== null || countdown <= 0) {
+        setCountdown(duration);
+        clearInterval(countdownInterval.current);
+      }
+    }
+  }, [state.selling]);
+
+  const animationControl = useAnimation();
   const aggregateCost = state.branches * unit_price;
-
-  const levelProgress =
-    (state.branches % branch_level_up_count) / branch_level_up_count;
 
   const sell = async () => {
     dispatch({ type: "selling", payload: true });
     await animationControl.start({
-      transition: { duration: production_time / 1000 },
+      transition: { duration },
       scaleX: [0, 1],
     });
     dispatch({ type: "selling", payload: false });
     gameDispatch({ type: "credit", payload: aggregateCost });
   };
 
+  const getLevelProgress = (branches) =>
+    (branches % branch_level_up_count) / branch_level_up_count;
+
+  const branchCost =
+    state.branches * company_branch_cost * company_branch_cost_multiplier;
+
   const buyBranch = () => {
-    if (levelProgress === 0) {
+    if (getLevelProgress(state.branches + 1) === 0) {
       dispatch({ type: "add_level" });
     }
     dispatch({ type: "buy_branch" });
@@ -110,7 +133,7 @@ const Company = ({
               <Flex flexDirection="column">
                 <Box>{name}</Box>
                 <Box>{state.branches}</Box>
-                <Progress value={levelProgress * 100} />
+                <Progress value={getLevelProgress(state.branches) * 100} />
               </Flex>
             </Button>
           </Box>
@@ -119,7 +142,6 @@ const Company = ({
               {aggregateCost}
               <br />
               <motion.div
-                duration="3"
                 animate={animationControl}
                 style={{
                   background: "orange",
@@ -136,8 +158,7 @@ const Company = ({
                 <NumberFormat value={branchCost} {...config.numberFormat} />
               </Button>
               <Box>
-                {/* Todo: countdown */}
-                {production_time / 1000}
+                <NumberFormat value={countdown} />
               </Box>
             </Flex>
           </Box>

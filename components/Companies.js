@@ -1,5 +1,5 @@
-import React, { useReducer, useContext, useRef, useEffect } from "react";
-import { Flex, Box, Button } from "@chakra-ui/core";
+import React, { useReducer, useContext, useEffect } from "react";
+import { Flex, Box, Button, Progress } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import { GameDispatch, GameState } from "../containers/Container";
 import { motion, useAnimation } from "framer-motion";
@@ -12,7 +12,7 @@ const companies = {
     company_purchase_cost: 0, // price at which additional companies can be purchased
     company_branch_cost: 4, // price of individual company
     company_branch_cost_multiplier: 1.05,
-    company_level_count: 25,
+    branch_level_up_count: 10,
   },
   News: {
     production_time: 3000,
@@ -20,7 +20,7 @@ const companies = {
     company_purchase_cost: 10,
     company_branch_cost_multiplier: 1.1,
     company_branch_cost: 69,
-    company_level_count: 30,
+    branch_level_up_count: 30,
   },
 };
 
@@ -32,6 +32,8 @@ const reducer = (state, action) => {
       return { ...state, purchased: true };
     case "buy_branch":
       return { ...state, branches: state.branches + 1 };
+    case "add_level":
+      return { ...state, level: state.level + 1 };
     default:
       throw new Error();
   }
@@ -44,13 +46,14 @@ const Company = ({
   company_branch_cost,
   company_branch_cost_multiplier,
   production_time,
+  branch_level_up_count,
 }) => {
   const gameDispatch = useContext(GameDispatch);
   const gameState = useContext(GameState);
 
   const [state, dispatch] = useReducer(reducer, {
     branches: 1,
-    // aggregate_cost: unit_price, // price to buy single unit
+    level: 1,
     selling: false,
     purchased: false,
   });
@@ -68,6 +71,9 @@ const Company = ({
 
   const aggregateCost = state.branches * unit_price;
 
+  const levelProgress =
+    (state.branches % branch_level_up_count) / branch_level_up_count;
+
   const sell = async () => {
     dispatch({ type: "selling", payload: true });
     await animationControl.start({
@@ -78,7 +84,10 @@ const Company = ({
     gameDispatch({ type: "credit", payload: aggregateCost });
   };
 
-  const buyBranch = (cost) => {
+  const buyBranch = () => {
+    if (levelProgress === 0) {
+      dispatch({ type: "add_level" });
+    }
     dispatch({ type: "buy_branch" });
     gameDispatch({ type: "debit", payload: branchCost });
   };
@@ -96,10 +105,13 @@ const Company = ({
         </Box>
       ) : (
         <Flex borderWidth="1px">
-          <Box p="2">
-            <Button borderWidth="1px" onClick={sell} disabled={state.selling}>
-              {name} <br />
-              {state.branches}
+          <Box>
+            <Button onClick={sell} height="5rem" disabled={state.selling}>
+              <Flex flexDirection="column">
+                <Box>{name}</Box>
+                <Box>{state.branches}</Box>
+                <Progress value={levelProgress * 100} />
+              </Flex>
             </Button>
           </Box>
           <Box p="2">
@@ -118,7 +130,7 @@ const Company = ({
             <Flex>
               <Button
                 disabled={gameState.balance < branchCost}
-                onClick={() => buyBranch(branchCost)}
+                onClick={() => buyBranch()}
               >
                 Buy 1x
                 <NumberFormat value={branchCost} {...config.numberFormat} />

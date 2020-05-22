@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Balance from "../components/Balance";
-import Companies from "../components/Companies";
+import React from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { theme } from "@chakra-ui/core";
-import React from "react";
-
 import Container from "../containers/Container";
+import Balance from "../components/Balance";
+import Companies from "../components/Companies";
+import Managers from "../components/Managers";
 
 export default function Home() {
   return (
@@ -22,6 +22,7 @@ export default function Home() {
         </main>
 
         <Container>
+          <Managers />
           <Balance />
           <Companies />
         </Container>

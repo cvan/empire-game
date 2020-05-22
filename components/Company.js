@@ -12,6 +12,13 @@ import { GameDispatch, GameState } from "../containers/Container";
 import { motion, useAnimation } from "framer-motion";
 import config from "../config";
 
+const initialCompanyState = {
+  branches: 1,
+  level: 1,
+  selling: false,
+  purchased: false,
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "selling":
@@ -35,15 +42,11 @@ export default ({
   company_branch_cost_multiplier,
   production_time,
   branch_level_up_count,
+  manager,
 }) => {
   const gameDispatch = useContext(GameDispatch);
   const gameState = useContext(GameState);
-  const [state, dispatch] = useReducer(reducer, {
-    branches: 1,
-    level: 1,
-    selling: false,
-    purchased: false,
-  });
+  const [state, dispatch] = useReducer(reducer, initialCompanyState);
 
   useEffect(() => {
     if (state.purchased) {
@@ -54,6 +57,13 @@ export default ({
   const duration = production_time / state.level / 1000;
   const countdownInterval = useRef(null);
   const [countdown, setCountdown] = useState(duration);
+
+  const onFinishSale = () => {
+    // if we've got a manager on board, we'll continue the gravy train!
+    if (manager) {
+      sell();
+    }
+  };
 
   useEffect(() => setCountdown(duration), [state.level]);
 
@@ -66,9 +76,13 @@ export default ({
       if (countdownInterval.current !== null || countdown <= 0) {
         setCountdown(duration);
         clearInterval(countdownInterval.current);
+        onFinishSale();
       }
     }
-  }, [state.selling]);
+    return () => {
+      clearInterval(countdownInterval.current);
+    };
+  }, [state.selling, manager]);
 
   const animationControl = useAnimation();
   const aggregateCost = state.branches * unit_price;

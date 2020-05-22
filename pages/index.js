@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
-import { theme } from "@chakra-ui/core";
+import { theme, Link } from "@chakra-ui/core";
 import Container from "../containers/Container";
 import Balance from "../components/Balance";
 import Companies from "../components/Companies";
@@ -27,7 +27,15 @@ export default function Home() {
           <Companies />
         </Container>
 
-        <footer>by Casey Yee</footer>
+        <footer>
+          Casey Yee, inspired by&nbsp;
+          <Link
+            href="http://en.gameslol.net/adventure-capitalist-1086.html"
+            isExternal
+          >
+            AdVenture Capitalist
+          </Link>
+        </footer>
 
         <style jsx>{`
           main {

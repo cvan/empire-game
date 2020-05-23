@@ -6,6 +6,7 @@ import Container from "../containers/Container";
 import Balance from "../components/Balance";
 import Companies from "../components/Companies";
 import Managers from "../components/Managers";
+import Chat from "../components/Chat";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
 
         <Container>
           <Balance />
+          <Chat />
           <Companies />
           <Managers />
         </Container>

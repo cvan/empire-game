@@ -6,9 +6,13 @@ import React, {
   useRef,
 } from "react";
 
-import { Flex, Box, Button, Progress } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
-import { GameDispatch, GameState } from "../containers/Container";
+import {
+  GameDispatch,
+  GameState,
+  CompaniesDispatch,
+} from "../containers/Container";
 import { motion, useAnimation } from "framer-motion";
 import config from "../config";
 
@@ -16,7 +20,6 @@ const initialCompanyState = {
   branches: 1,
   level: 1,
   selling: false,
-  purchased: false,
 };
 
 const reducer = (state, action) => {
@@ -34,7 +37,60 @@ const reducer = (state, action) => {
   }
 };
 
+const BoxButton = ({ disabled, children, ...props }) => {
+  const disabledProps = {
+    opacity: disabled ? 0.5 : 1,
+    cursor: disabled ? "not-allowed" : "pointer",
+    pointerEvents: disabled ? "none" : "auto",
+  };
+
+  return (
+    <Box {...disabledProps} {...props}>
+      {children}
+    </Box>
+  );
+};
+
+const CompanyIcon = () => (
+  <Box
+    background="green"
+    width="4rem"
+    height="4rem"
+    borderRadius="2rem"
+    m="auto"
+  ></Box>
+);
+
+const LevelProgress = ({ value, children, ...props }) => (
+  <Box position="relative" height="1.5rem" {...props}>
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "1.5rem",
+        transform: `scaleX(${value})`,
+        transformOrigin: "0 0",
+        background: "green",
+      }}
+      {...props}
+    ></div>
+    <Box
+      position="absolute"
+      top="0"
+      left="0"
+      width="100%"
+      textAlign="center"
+      lineHeight="1.5rem"
+    >
+      {children}
+    </Box>
+  </Box>
+);
+
 export default ({
+  id,
   name,
   unit_price,
   company_purchase_cost,
@@ -43,16 +99,19 @@ export default ({
   production_time,
   branch_level_up_count,
   manager,
+  purchased,
 }) => {
   const gameDispatch = useContext(GameDispatch);
   const gameState = useContext(GameState);
+  const companiesDispatch = useContext(CompaniesDispatch);
+
   const [state, dispatch] = useReducer(reducer, initialCompanyState);
 
   useEffect(() => {
-    if (state.purchased) {
+    if (purchased) {
       gameDispatch({ type: "debit", payload: company_purchase_cost });
     }
-  }, [state.purchased]);
+  }, [purchased]);
 
   const duration = production_time / state.level / 1000;
   const countdownInterval = useRef(null);
@@ -91,7 +150,8 @@ export default ({
     dispatch({ type: "selling", payload: true });
     await animationControl.start({
       transition: { duration },
-      scaleX: [0, 1],
+      scaleY: [0, 1],
+      originY: [1, 1],
     });
     dispatch({ type: "selling", payload: false });
     gameDispatch({ type: "credit", payload: aggregateCost });
@@ -112,53 +172,68 @@ export default ({
   };
 
   return (
-    <Box>
-      {!state.purchased ? (
-        <Box borderWidth="1px">
-          <Button
-            disabled={gameState.balance < company_purchase_cost}
-            onClick={() => dispatch({ type: "buy_company" })}
-          >
-            Buy {name} Corp for {company_purchase_cost}
-          </Button>
-        </Box>
+    <Box width="10rem" borderWidth="1px" p="2">
+      {!purchased ? (
+        <BoxButton
+          disabled={gameState.balance < company_purchase_cost}
+          onClick={() =>
+            companiesDispatch({ type: "buy_company", payload: id })
+          }
+          textAlign="center"
+          height="100%"
+          p="3"
+        >
+          Start {name} <br />
+          {company_purchase_cost}
+        </BoxButton>
       ) : (
-        <Flex borderWidth="1px">
+        <Box textAlign="center">
+          <Box>{name}</Box>
           <Box>
-            <Button onClick={sell} height="5rem" disabled={state.selling}>
-              <Flex flexDirection="column">
-                <Box>{name}</Box>
-                <Box>{state.branches}</Box>
-                <Progress value={getLevelProgress(state.branches) * 100} />
-              </Flex>
-            </Button>
+            ${aggregateCost}
+            <br />
+            <motion.div
+              animate={animationControl}
+              style={{
+                background: "orange",
+                height: "6rem",
+                width: "2rem",
+                margin: "auto",
+              }}
+            />
           </Box>
-          <Box p="2">
-            <Box borderWidth="1px">
-              {aggregateCost}
+
+          <Box>
+            <NumberFormat
+              displayType="text"
+              value={countdown}
+              decimalScale="2"
+            />
+            <br />
+            {state.level > 1 && <Box>{state.level}x Speed</Box>}
+          </Box>
+
+          <Box>
+            <BoxButton onClick={sell} disabled={state.selling}>
+              <CompanyIcon />
+            </BoxButton>
+
+            <LevelProgress value={getLevelProgress(state.branches)} mt="1rem">
+              {state.branches}
+            </LevelProgress>
+
+            <BoxButton
+              mt="1rem"
+              disabled={gameState.balance < branchCost}
+              onClick={() => buyBranch()}
+              background="gray"
+            >
+              buy +1
               <br />
-              <motion.div
-                animate={animationControl}
-                style={{
-                  background: "orange",
-                  height: "1rem",
-                }}
-              />
-            </Box>
-            <Flex>
-              <Button
-                disabled={gameState.balance < branchCost}
-                onClick={() => buyBranch()}
-              >
-                Buy 1x
-                <NumberFormat value={branchCost} {...config.numberFormat} />
-              </Button>
-              <Box>
-                <NumberFormat value={countdown} />
-              </Box>
-            </Flex>
+              <NumberFormat value={branchCost} {...config.numberFormat} />
+            </BoxButton>
           </Box>
-        </Flex>
+        </Box>
       )}
     </Box>
   );

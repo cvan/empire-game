@@ -22,9 +22,9 @@ export default function Home() {
         </main>
 
         <Container>
-          <Managers />
           <Balance />
           <Companies />
+          <Managers />
         </Container>
 
         <footer>

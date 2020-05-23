@@ -6,6 +6,11 @@ const initialState = {
   balance: 0,
 };
 
+const companyStateDefaults = {
+  manager: false,
+  purchased: false,
+};
+
 export const GameState = createContext();
 export const GameDispatch = createContext();
 export const CompaniesState = createContext();
@@ -24,6 +29,11 @@ const reducer = (state, action) => {
 
 const companyReducer = (state, action) => {
   switch (action.type) {
+    case "buy_company":
+      state[action.payload].purchased = true;
+      return {
+        ...state,
+      };
     case "hire_manager":
       state[action.payload].manager = true;
       return {
@@ -36,9 +46,21 @@ const companyReducer = (state, action) => {
 
 const Container = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const mergedInitialCompanyState = () => {
+    let merged = {};
+    Object.keys(initialCompaniesState).map((key) => {
+      merged[key] = {
+        ...initialCompaniesState[key],
+        ...companyStateDefaults,
+      };
+    });
+    return merged;
+  };
+
   const [companies, dispatchCompanies] = useReducer(
     companyReducer,
-    initialCompaniesState
+    mergedInitialCompanyState()
   );
 
   return (

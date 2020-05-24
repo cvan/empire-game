@@ -9,7 +9,6 @@ import Chat from "./Chat";
 const appStyles = {
   position: "absolute",
   top: 0,
-  width: "100%",
 };
 
 export default ({ children, ...props }) => {

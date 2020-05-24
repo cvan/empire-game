@@ -12,7 +12,7 @@ export default (props) => {
       <Flex>
         {Object.keys(companies).map((key) => {
           return (
-            <Box width="2rem" key={`company-${key}`}>
+            <Box key={`company-${key}`}>
               <Company id={key} {...companies[key]} />
             </Box>
           );

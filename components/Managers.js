@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 
 import { Box, Button } from "@chakra-ui/core";
 import {
-  GameDispatch,
-  GameState,
+  AccountsDispatch,
+  AccountsState,
   CompaniesState,
   CompaniesDispatch,
 } from "../containers/Container";
@@ -11,14 +11,14 @@ import NumberFormat from "react-number-format";
 import config from "../config";
 
 export default () => {
-  const gameDispatch = useContext(GameDispatch);
-  const gameState = useContext(GameState);
+  const accountsDispatch = useContext(AccountsDispatch);
+  const accountsState = useContext(AccountsState);
   const companies = useContext(CompaniesState);
   const dispatch = useContext(CompaniesDispatch);
 
   const hireManager = (key, cost) => {
     dispatch({ type: "hire_manager", payload: key });
-    gameDispatch({ type: "debit", payload: cost });
+    accountsDispatch({ type: "debit", payload: cost });
   };
 
   return (
@@ -31,7 +31,7 @@ export default () => {
             <Box key={`manager-${key}`} borderWidth="1px">
               <Button
                 onClick={() => hireManager(key, company.manager_cost)}
-                disabled={company.manager_cost > gameState.balance}
+                disabled={company.manager_cost > accountsState.balance}
               >
                 Manager runs&nbsp;
                 <em>{key}</em>, Hire for &nbsp;

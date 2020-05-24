@@ -9,8 +9,8 @@ import React, {
 import { Box } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import {
-  GameDispatch,
-  GameState,
+  AccountsDispatch,
+  AccountsState,
   CompaniesDispatch,
 } from "../containers/Container";
 import { motion, useAnimation } from "framer-motion";
@@ -101,15 +101,15 @@ export default ({
   manager,
   purchased,
 }) => {
-  const gameDispatch = useContext(GameDispatch);
-  const gameState = useContext(GameState);
+  const accountsDispatch = useContext(AccountsDispatch);
+  const accountsState = useContext(AccountsState);
   const companiesDispatch = useContext(CompaniesDispatch);
 
   const [state, dispatch] = useReducer(reducer, initialCompanyState);
 
   useEffect(() => {
     if (purchased) {
-      gameDispatch({ type: "debit", payload: company_purchase_cost });
+      accountsDispatch({ type: "debit", payload: company_purchase_cost });
     }
   }, [purchased]);
 
@@ -154,7 +154,7 @@ export default ({
       originY: [1, 1],
     });
     dispatch({ type: "selling", payload: false });
-    gameDispatch({ type: "credit", payload: aggregateCost });
+    accountsDispatch({ type: "credit", payload: aggregateCost });
   };
 
   const getLevelProgress = (branches) =>
@@ -168,14 +168,14 @@ export default ({
       dispatch({ type: "add_level" });
     }
     dispatch({ type: "buy_branch" });
-    gameDispatch({ type: "debit", payload: branchCost });
+    accountsDispatch({ type: "debit", payload: branchCost });
   };
 
   return (
     <Box width="10rem" borderWidth="1px" p="2">
       {!purchased ? (
         <BoxButton
-          disabled={gameState.balance < company_purchase_cost}
+          disabled={accountsState.balance < company_purchase_cost}
           onClick={() =>
             companiesDispatch({ type: "buy_company", payload: id })
           }
@@ -224,7 +224,7 @@ export default ({
 
             <BoxButton
               mt="1rem"
-              disabled={gameState.balance < branchCost}
+              disabled={accountsState.balance < branchCost}
               onClick={() => buyBranch()}
               background="gray"
             >

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { GameState } from "../containers/Container";
+import { AccountsState } from "../containers/Container";
 import { Box } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import config from "../config";
 
 export default () => {
-  const { balance } = useContext(GameState);
+  const { balance } = useContext(AccountsState);
 
   return (
     <Box textAlign="center" fontSize="xl" mb="4rem">

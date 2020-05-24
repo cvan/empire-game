@@ -13,36 +13,32 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <CSSReset />
-      <Box background="#efefef">
-        <div className="container">
-          <Head>
-            <title>Empire</title>
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
 
-          <main>
-            <h1 className="title">Empire</h1>
-          </main>
+      <Head>
+        <title>Empire</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-          <Container>
-            <Balance />
-            <Chat />
-            <Companies />
-            <Managers />
-            <Dock />
-          </Container>
+      <h1 className="title">Empire</h1>
 
-          <footer>
-            Casey Yee, inspired by&nbsp;
-            <Link
-              href="http://en.gameslol.net/adventure-capitalist-1086.html"
-              isExternal
-            >
-              AdVenture Capitalist
-            </Link>
-          </footer>
-        </div>
-      </Box>
+      <Container>
+        <Dock>
+          <Balance />
+          <Chat />
+          <Companies />
+          <Managers />
+        </Dock>
+      </Container>
+
+      <footer>
+        Casey Yee, inspired by&nbsp;
+        <Link
+          href="http://en.gameslol.net/adventure-capitalist-1086.html"
+          isExternal
+        >
+          AdVenture Capitalist
+        </Link>
+      </footer>
     </ThemeProvider>
   );
 }

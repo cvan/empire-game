@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 import initialCompaniesState from "../data/companies";
 
-const initialState = {
+const accountsInitialState = {
   balance: 0,
 };
 
@@ -11,8 +11,8 @@ const companyStateDefaults = {
   purchased: false,
 };
 
-export const GameState = createContext();
-export const GameDispatch = createContext();
+export const AccountsState = createContext();
+export const AccountsDispatch = createContext();
 export const CompaniesState = createContext();
 export const CompaniesDispatch = createContext();
 
@@ -45,7 +45,10 @@ const companyReducer = (state, action) => {
 };
 
 const Container = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [accountsState, accountsDispatch] = useReducer(
+    reducer,
+    accountsInitialState
+  );
 
   const mergedInitialCompanyState = () => {
     let merged = {};
@@ -64,15 +67,15 @@ const Container = ({ children }) => {
   );
 
   return (
-    <GameDispatch.Provider value={dispatch}>
-      <GameState.Provider value={state}>
+    <AccountsDispatch.Provider value={accountsDispatch}>
+      <AccountsState.Provider value={accountsState}>
         <CompaniesDispatch.Provider value={dispatchCompanies}>
           <CompaniesState.Provider value={companies}>
             {children}
           </CompaniesState.Provider>
         </CompaniesDispatch.Provider>
-      </GameState.Provider>
-    </GameDispatch.Provider>
+      </AccountsState.Provider>
+    </AccountsDispatch.Provider>
   );
 };
 

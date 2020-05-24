@@ -196,7 +196,7 @@ export default ({
               animate={animationControl}
               style={{
                 background: "orange",
-                height: "6rem",
+                height: "3rem",
                 width: "2rem",
                 margin: "auto",
               }}

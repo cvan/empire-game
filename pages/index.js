@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { theme, Link, Box, Flex } from "@chakra-ui/core";
+import OSMenu from "../components/OSMenu";
 import Container from "../containers/Container";
 import Balance from "../components/Balance";
 import Apps from "../components/Apps";
@@ -28,15 +29,12 @@ export default function Home() {
             minWidth="27rem"
             margin="auto"
             position="relative"
-            borderRadius="2rem"
+            borderRadius="1rem"
+            height="80vh"
+            overflow="hidden"
           >
-            <Flex
-              flexDirection="column"
-              height="80vh"
-              // width="100%"
-              // borderWidth="1px"
-              overflow="scroll"
-            >
+            <Flex flexDirection="column" background="lightblue" height="100%">
+              <OSMenu>Empire OS</OSMenu>
               <Balance />
               <Apps />
             </Flex>

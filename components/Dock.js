@@ -22,9 +22,10 @@ export default (props) => {
           key={`menu-${key}`}
           src={menu[key].src}
           m="0.75rem"
-          boxShadow="4px 4px 3px 0px rgba(0,0,0,0.24)"
+          boxShadow="3px 3px 4px 0px rgba(0,0,0,0.24)"
           borderRadius="1.5rem"
           maxWidth="5rem"
+          cursor="pointer"
         />
       ))}
     </Flex>

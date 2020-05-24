@@ -1,2 +1,8 @@
 import { Box } from "@chakra-ui/core";
-export default (props) => <Box {...props}>news</Box>;
+import AppHead from "./AppHead";
+
+export default (props) => (
+  <Box {...props}>
+    <AppHead>News</AppHead>
+  </Box>
+);

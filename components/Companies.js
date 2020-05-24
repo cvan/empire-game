@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Flex, Box } from "@chakra-ui/core";
+import { Flex, Box, Grid } from "@chakra-ui/core";
 import Company from "./Company";
 import { CompaniesState } from "../containers/Container";
 import AppHead from "./AppHead";
@@ -9,7 +9,7 @@ export default (props) => {
   return (
     <Box {...props}>
       <AppHead>Companies</AppHead>
-      <Flex>
+      <Grid templateColumns="repeat(3, 1fr)">
         {Object.keys(companies).map((key) => {
           return (
             <Box key={`company-${key}`}>
@@ -17,7 +17,7 @@ export default (props) => {
             </Box>
           );
         })}
-      </Flex>
+      </Grid>
     </Box>
   );
 };

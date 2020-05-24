@@ -4,11 +4,11 @@ import { Box } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import config from "../config";
 
-export default () => {
+export default (props) => {
   const { balance } = useContext(AccountsState);
 
   return (
-    <Box textAlign="center" fontSize="xl" mb="4rem">
+    <Box textAlign="center" fontSize="xl" {...props}>
       <NumberFormat value={balance} {...config.numberFormat} />
 
       <Box>

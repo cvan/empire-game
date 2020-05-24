@@ -1,6 +1,12 @@
 import React, { createContext, useReducer } from "react";
 
 import initialCompaniesState from "../data/companies";
+import menu from "../data/menu";
+
+const gameInitialState = {
+  menu,
+  current_menu: "news",
+};
 
 const accountsInitialState = {
   balance: 0,
@@ -15,8 +21,10 @@ export const AccountsState = createContext();
 export const AccountsDispatch = createContext();
 export const CompaniesState = createContext();
 export const CompaniesDispatch = createContext();
+export const GameState = createContext();
+export const GameDispatch = createContext();
 
-const reducer = (state, action) => {
+const accountsReducer = (state, action) => {
   switch (action.type) {
     case "credit":
       return { ...state, balance: state.balance + action.payload };
@@ -44,11 +52,26 @@ const companyReducer = (state, action) => {
   }
 };
 
+const gameReducer = (state, action) => {
+  switch (action.type) {
+    case "open_menu": {
+      return {
+        ...state,
+        current_menu: action.payload,
+      };
+    }
+    default:
+      throw new Error();
+  }
+};
+
 const Container = ({ children }) => {
   const [accountsState, accountsDispatch] = useReducer(
-    reducer,
+    accountsReducer,
     accountsInitialState
   );
+
+  const [gameState, gameDispatch] = useReducer(gameReducer, gameInitialState);
 
   const mergedInitialCompanyState = () => {
     let merged = {};
@@ -67,15 +90,19 @@ const Container = ({ children }) => {
   );
 
   return (
-    <AccountsDispatch.Provider value={accountsDispatch}>
-      <AccountsState.Provider value={accountsState}>
-        <CompaniesDispatch.Provider value={dispatchCompanies}>
-          <CompaniesState.Provider value={companies}>
-            {children}
-          </CompaniesState.Provider>
-        </CompaniesDispatch.Provider>
-      </AccountsState.Provider>
-    </AccountsDispatch.Provider>
+    <GameDispatch.Provider value={gameDispatch}>
+      <GameState.Provider value={gameState}>
+        <AccountsDispatch.Provider value={accountsDispatch}>
+          <AccountsState.Provider value={accountsState}>
+            <CompaniesDispatch.Provider value={dispatchCompanies}>
+              <CompaniesState.Provider value={companies}>
+                {children}
+              </CompaniesState.Provider>
+            </CompaniesDispatch.Provider>
+          </AccountsState.Provider>
+        </AccountsDispatch.Provider>
+      </GameState.Provider>
+    </GameDispatch.Provider>
   );
 };
 

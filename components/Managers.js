@@ -7,10 +7,11 @@ import {
   CompaniesState,
   CompaniesDispatch,
 } from "../containers/Container";
+import AppHead from "./AppHead";
 import NumberFormat from "react-number-format";
 import config from "../config";
 
-export default () => {
+export default (props) => {
   const accountsDispatch = useContext(AccountsDispatch);
   const accountsState = useContext(AccountsState);
   const companies = useContext(CompaniesState);
@@ -22,8 +23,8 @@ export default () => {
   };
 
   return (
-    <Box>
-      <h2>Managers</h2>
+    <Box {...props}>
+      <AppHead>Managers</AppHead>
       {Object.keys(companies).map((key) => {
         const company = companies[key];
         if (!company.manager) {

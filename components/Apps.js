@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Flex, Box } from "@chakra-ui/core";
+import { Flex } from "@chakra-ui/core";
 import { GameState } from "../containers/Container";
 import Companies from "./Companies";
 import Managers from "./Managers";
@@ -39,7 +39,6 @@ export default ({ children, ...props }) => {
       alignItems="center"
       justifyContent="center"
       height="100%"
-      mt="2rem"
       mb="10rem"
     >
       <News {...setStyleProps("news")} />

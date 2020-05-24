@@ -53,11 +53,18 @@ const companyReducer = (state, action) => {
 };
 
 const gameReducer = (state, action) => {
+  console.log(state);
   switch (action.type) {
     case "open_menu": {
       return {
         ...state,
         current_menu: action.payload,
+      };
+    }
+    case "install_app": {
+      state.menu[action.payload].installed = true;
+      return {
+        ...state,
       };
     }
     default:

@@ -8,11 +8,13 @@ export default (props) => {
   const { balance } = useContext(AccountsState);
 
   return (
-    <Box textAlign="center" fontSize="xl" {...props}>
-      <NumberFormat value={balance} {...config.numberFormat} />
+    <Box {...props} py="1rem">
+      <Box textAlign="center" fontSize="3rem" fontWeight="bold">
+        <NumberFormat value={balance} {...config.numberFormat} />
+      </Box>
 
-      <Box>
-        {balance < 1000 && "Parents place is pretty nice"}
+      <Box textAlign="center">
+        {balance < 1000 && "Parents place is pretty nice 🙄"}
         {balance > 1000 && balance < 10000 && "#Vanlife"}
         {balance > 10000 && balance < 100000 && "Ballin'"}
         {balance > 100000 && balance < 500000 && "Truffles are pretty dope!"}

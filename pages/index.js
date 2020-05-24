@@ -15,22 +15,18 @@ export default function Home() {
         <CSSReset />
 
         <Head>
-          <title>Empire</title>
+          <title>Empire OS</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
-        <h1 className="title">Empire</h1>
 
         <Container>
           <Box
             background="#efefef"
-            width="80%"
-            maxWidth="50rem"
-            minWidth="27rem"
+            width="100%"
+            height="100%"
             margin="auto"
             position="relative"
             borderRadius="1rem"
-            height="80vh"
             overflow="hidden"
           >
             <Flex flexDirection="column" background="lightblue" height="100%">
@@ -42,7 +38,7 @@ export default function Home() {
           </Box>
         </Container>
 
-        <footer>
+        {/* <footer>
           Casey Yee, inspired by&nbsp;
           <Link
             href="http://en.gameslol.net/adventure-capitalist-1086.html"
@@ -50,7 +46,7 @@ export default function Home() {
           >
             AdVenture Capitalist
           </Link>
-        </footer>
+        </footer> */}
       </ThemeProvider>
       <style jsx global>{`
         * {

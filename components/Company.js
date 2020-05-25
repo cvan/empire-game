@@ -5,15 +5,16 @@ import React, {
   useState,
   useRef,
 } from "react";
-
-import { Box, Flex, Badge, Button, Image } from "@chakra-ui/core";
+import { Box, Flex, Badge, Button } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
+import { useAnimation } from "framer-motion";
 import {
   AccountsDispatch,
   AccountsState,
   CompaniesDispatch,
 } from "../containers/Container";
-import { motion, useAnimation } from "framer-motion";
+import CompanyIconButton from "./CompanyIconButton";
+import BoxButton from "./BoxButton";
 import config from "../config";
 
 const initialCompanyState = {
@@ -36,26 +37,6 @@ const reducer = (state, action) => {
       throw new Error();
   }
 };
-
-const BoxButton = ({ disabled, children, ...props }) => {
-  const disabledProps = {
-    opacity: disabled ? 0.5 : 1,
-    cursor: disabled ? "not-allowed" : "pointer",
-    pointerEvents: disabled ? "none" : "auto",
-  };
-
-  return (
-    <Box {...disabledProps} {...props}>
-      {children}
-    </Box>
-  );
-};
-
-const CompanyIcon = ({ src, ...props }) => (
-  <Box objectFit="cover" {...props}>
-    <Image src={src} />
-  </Box>
-);
 
 const LevelProgress = ({ value, children, ...props }) => (
   <Box
@@ -180,8 +161,10 @@ export default ({
 
   const containerStyles = {
     borderWidth: "1px",
-    background: canBePurchased || purchased ? "#2196f3" : "white",
+    background: canBePurchased || purchased ? "#496175" : "white",
     color: canBePurchased || purchased ? "white" : "black",
+    boxShadow:
+      canBePurchased || (purchased && "3px 3px 10px 0px rgba(0,0,0,0.24)"),
   };
 
   const iconConfig = {
@@ -200,19 +183,12 @@ export default ({
           textAlign="center"
         >
           <Box fontWeight="bold">{name}</Box>
-          <Box
-            overflow="hidden"
-            borderRadius={`${iconConfig.size + iconConfig.progress / 2}rem`}
-            height={`${iconConfig.size + iconConfig.progress}rem`}
-            width={`${iconConfig.size + iconConfig.progress}rem`}
-            m="auto"
-          >
-            <CompanyIcon
-              src={icon}
-              height={`${iconConfig.size + iconConfig.progress}rem`}
-              width={`${iconConfig.size + iconConfig.progress}rem`}
-            />
-          </Box>
+          <CompanyIconButton
+            disabled={!canBePurchased}
+            icon={icon}
+            hasProgress={false}
+            {...iconConfig}
+          />
           <Button
             variantColor={canBePurchased ? "green" : "gray"}
             fontWeight="bold"
@@ -230,92 +206,51 @@ export default ({
         </BoxButton>
       ) : (
         <Box textAlign="center">
-          <Box>{name}</Box>
-          <Box>
-            ${aggregateCost}
-            <br />
-          </Box>
-
-          <Box>
-            <BoxButton
-              onClick={sell}
-              disabled={state.selling}
-              position="relative"
-              height={`${iconConfig.size + iconConfig.progress}rem`}
-              width={`${iconConfig.size + iconConfig.progress}rem`}
-              margin="auto"
-            >
-              <div
-                style={{
-                  position: "relative",
-                  width: `${iconConfig.size + iconConfig.progress}rem`,
-                  height: `${iconConfig.size + iconConfig.progress}rem`,
-                  borderRadius: `${
-                    iconConfig.size + iconConfig.progress / 2
-                  }rem`,
-                  overflow: "hidden",
-                }}
-              >
-                <motion.div
-                  id="selling-progress"
-                  animate={animationControl}
-                  style={{
-                    background: "#afbeca",
-                    width: "100%",
-                    height: "100%",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  width: `${iconConfig.size}rem`,
-                  height: `${iconConfig.size}rem`,
-                  top: `${
-                    (iconConfig.size + iconConfig.progress - iconConfig.size) /
-                    2
-                  }rem`,
-                  left: `${
-                    (iconConfig.size + iconConfig.progress - iconConfig.size) /
-                    2
-                  }rem`,
-                  borderRadius: `${iconConfig.size / 2}rem`,
-                  overflow: "hidden",
-                }}
-              >
-                <CompanyIcon src={icon} width="100%" height="100%" />
-              </div>
-            </BoxButton>
-
-            <Box id="countdown-timer">
-              <NumberFormat
-                displayType="text"
-                value={countdown}
-                decimalScale="2"
+          <Flex>
+            <Box>
+              <Box>${aggregateCost}</Box>
+              <CompanyIconButton
+                disabled={state.selling}
+                icon={icon}
+                onClick={sell}
+                hasProgress={true}
+                animationControl={animationControl}
+                {...iconConfig}
               />
-              s&nbsp;
-              {state.level > 1 && (
-                <Badge variantColor="green">{state.level}x</Badge>
-              )}
             </Box>
 
-            <LevelProgress value={getLevelProgress(state.branches)}>
-              {state.branches}
-            </LevelProgress>
+            <Box>
+              <Box fontWeight="bold">{name}</Box>
+              <Box id="countdown-timer">
+                <NumberFormat
+                  displayType="text"
+                  value={countdown}
+                  decimalScale="2"
+                />
+                s&nbsp;
+                {state.level > 1 && (
+                  <Badge variantColor="green">{state.level}x</Badge>
+                )}
+              </Box>
 
-            <Button
-              mt="1rem"
-              disabled={accountsState.balance < branchCost}
-              onClick={() => buyBranch()}
-              borderRadius="0.5rem"
-              variantColor={
-                accountsState.balance > branchCost ? "green" : "gray"
-              }
-            >
-              Buy +1&nbsp;
-              <NumberFormat value={branchCost} {...config.numberFormat} />
-            </Button>
-          </Box>
+              <LevelProgress value={getLevelProgress(state.branches)}>
+                {state.branches}
+              </LevelProgress>
+
+              <Button
+                mt="1rem"
+                disabled={accountsState.balance < branchCost}
+                onClick={() => buyBranch()}
+                borderRadius="0.5rem"
+                variantColor={
+                  accountsState.balance > branchCost ? "green" : "gray"
+                }
+              >
+                Buy +1&nbsp;
+                <NumberFormat value={branchCost} {...config.numberFormat} />
+              </Button>
+            </Box>
+          </Flex>
         </Box>
       )}
     </Box>

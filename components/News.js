@@ -64,7 +64,7 @@ export default (props) => {
       >
         {state === ComponentState.Intro && (
           <Box>
-            <Heading>Your tech startup dreams!</Heading>
+            <Heading textAlign="center">Your Tech Startup Dreams!</Heading>
             <Box mt="1rem" display={["none", "block"]}>
               Ride profits all the way to the moon by creating companies,
               increasing profits and hiring a unicorn team to run it all while

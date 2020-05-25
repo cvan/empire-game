@@ -8,7 +8,7 @@ export default (props) => {
   const companies = useContext(CompaniesState);
   return (
     <Box {...props} overflow="auto">
-      <AppHead>Companies</AppHead>
+      <AppHead background="#da201a">Megapreneur</AppHead>
       <Grid
         templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
         p="3"

@@ -126,7 +126,7 @@ export default ({
 
   const containerStyles = {
     borderWidth: "1px",
-    background: canBePurchased || purchased ? "#496175" : "white",
+    background: canBePurchased || purchased ? "#2a4361" : "white",
     color: canBePurchased || purchased ? "white" : "black",
     boxShadow:
       canBePurchased || (purchased && "3px 3px 10px 0px rgba(0,0,0,0.24)"),
@@ -175,7 +175,7 @@ export default ({
                 mt="0.5rem"
                 minWidth="6rem"
                 borderRadius="0.5rem"
-                variantColor={canBePurchased ? "green" : "gray"}
+                variantColor={canBePurchased ? "blue" : "gray"}
                 fontWeight="bold"
                 fontSize="lg"
               >
@@ -238,9 +238,9 @@ export default ({
                 onClick={() => buyBranch()}
                 borderRadius="0.5rem"
                 borderWidth={accountsState.balance < branchCost ? "1px" : "0"}
-                _hover="#276749"
+                _hover="#3182ce"
                 background={
-                  accountsState.balance > branchCost ? "#38a169" : "transparent"
+                  accountsState.balance > branchCost ? "#3182ce" : "transparent"
                 }
               >
                 Buy &nbsp;

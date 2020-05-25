@@ -24,7 +24,7 @@ export default (props) => {
 
   return (
     <Box {...props}>
-      <AppHead>Managers</AppHead>
+      <AppHead>Mega Hire</AppHead>
       {Object.keys(companies).map((key) => {
         const company = companies[key];
         if (!company.manager) {

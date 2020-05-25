@@ -47,22 +47,19 @@ export default (props) => {
   }, []);
 
   useEffect(() => {
+    // Users balance is larger than the minimum cost of a manager,
+    // We'll notify to Install the Managers app.
     if (
       accountsState.balance > minManagerCost &&
       state !== ComponentState.Managed
     ) {
       dispatch({ type: "CanManage" });
-    }
-  }, [accountsState.balance]);
-
-  useEffect(() => {
-    if (state === ComponentState.CanManage) {
       gameDispatch({
         type: "set_app_badge",
         payload: { key: "news", value: true },
       });
     }
-  }, [state]);
+  }, [accountsState.balance]);
 
   return (
     <Box {...props}>

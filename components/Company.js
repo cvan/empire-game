@@ -106,6 +106,7 @@ export default ({
   useEffect(() => setCountdown(duration), [state.level]);
 
   useEffect(() => {
+    // Set the countdown timer
     if (state.selling) {
       countdownInterval.current = setInterval(() => {
         setCountdown((prevState) => prevState - 1);

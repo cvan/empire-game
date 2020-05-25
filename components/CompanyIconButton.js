@@ -10,9 +10,9 @@ const CompanyIcon = ({ src, ...props }) => (
 
 export default ({
   icon,
-  size,
+  size = 5,
+  progress = 1,
   hasProgress,
-  progress,
   onClick,
   animationControl,
   ...props

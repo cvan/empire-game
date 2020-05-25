@@ -132,11 +132,6 @@ export default ({
       canBePurchased || (purchased && "3px 3px 10px 0px rgba(0,0,0,0.24)"),
   };
 
-  const iconConfig = {
-    size: 5,
-    progress: 1,
-  };
-
   return (
     <Box
       height="100%"
@@ -166,7 +161,6 @@ export default ({
                 disabled={!canBePurchased}
                 icon={icon}
                 hasProgress={false}
-                {...iconConfig}
               />
             </Box>
             <Box flex="1">
@@ -201,7 +195,6 @@ export default ({
                 onClick={sell}
                 hasProgress={true}
                 animationControl={animationControl}
-                {...iconConfig}
               />
               <CompanyLevelProgress
                 mt="0.5rem"

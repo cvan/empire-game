@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Box } from "@chakra-ui/core";
+import { Box, Link } from "@chakra-ui/core";
 import AppHead from "./AppHead";
 
 const Say = ({ children, typing }) => {
@@ -19,6 +19,7 @@ const Say = ({ children, typing }) => {
         className="bubble say"
         ref={container}
         style={{
+          whiteSpace: "nowrap",
           width,
         }}
       >
@@ -46,24 +47,51 @@ const Reply = ({ children, typing }) => {
 // We've imported the chat styles from myzel-chat-bubble npm package.
 // See /pages/_app.js for inclusion.
 export default (props) => {
+  const faProps = {
+    style: { display: "inline-block" },
+  };
   return (
     <Box {...props}>
       <AppHead background="#8dcc46">Chat</AppHead>
+
       <div className="bubble-container" style={{ height: "100%" }}>
         <div className="bubble-wrap">
-          <Say>Saying something</Say>
-          <Say>Shhhhh! You know nuthin!</Say>
-          <Reply>Replying to you</Reply>
-          <Reply>Try again</Reply>
+          <Say>🤙</Say>
           <Say>
-            What a whack job kind of thing to say. What do you think about that?
+            Hey! How goes it? You have
+            <br />
+            the lowdown on this project?
           </Say>
+          <Reply>Pretty good thanks. Yeah, here you go</Reply>
           <Reply>
-            Rockin' well, lets just say we should just finish this off tonite.
+            <Link href="https://github.com/caseyyee/empire-game" isExternal>
+              🛠&nbsp; Empire Game Github
+            </Link>
           </Reply>
+          <Reply>
+            Inpsired by
+            <Link
+              href="http://en.gameslol.net/adventure-capitalist-1086.html"
+              isExternal
+            >
+              AdVenture Capitalist 🤑
+            </Link>
+          </Reply>
+          <Reply>It's a pretty rad game</Reply>
           <Say>
-            Rockin' well, lets just say we should just finish this off tonite.
+            You should take a look
+            <br />
+            at Casey's Site.
           </Say>
+          <Say>
+            <Link href="https://github.com/caseyyee/empire-game" isExternal>
+              👀 &nbsp; caseyyee.com
+            </Link>
+          </Say>
+          <Reply>😁&nbsp;😁&nbsp;😁</Reply>
+          <Reply>Cool. Will do!</Reply>
+
+          <Say>💥</Say>
         </div>
       </div>
     </Box>

@@ -51,16 +51,6 @@ export default function Home() {
             </Box>
           </Container>
         </Box>
-
-        {/* <footer>
-          Casey Yee, inspired by&nbsp;
-          <Link
-            href="http://en.gameslol.net/adventure-capitalist-1086.html"
-            isExternal
-          >
-            AdVenture Capitalist
-          </Link>
-        </footer> */}
       </ThemeProvider>
       <style jsx global>{`
         * {

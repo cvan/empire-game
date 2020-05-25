@@ -5,6 +5,7 @@ import {
   AccountsState,
   CompaniesState,
 } from "../containers/Container";
+import AppHead from "./AppHead";
 import empire from "../images/empire.png";
 import managers from "../images/managers.png";
 import { FiArrowDown } from "react-icons/fi";
@@ -53,8 +54,18 @@ export default (props) => {
     }
   }, [accountsState.balance]);
 
+  useEffect(() => {
+    if (state === ComponentState.CanManage) {
+      gameDispatch({
+        type: "set_app_badge",
+        payload: { key: "news", value: true },
+      });
+    }
+  }, [state]);
+
   return (
     <Box {...props}>
+      <AppHead background="white" foreground="#9a9a9a" position="absolute" />
       <Flex
         maxWidth="30rem"
         m="auto"

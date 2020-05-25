@@ -66,6 +66,10 @@ const gameReducer = (state, action) => {
         ...state,
       };
     }
+    case "set_app_badge": {
+      state.menu[action.payload.key].badge = action.payload.value;
+      return { ...state };
+    }
     default:
       throw new Error();
   }

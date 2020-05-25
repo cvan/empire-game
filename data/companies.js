@@ -70,6 +70,6 @@ export default {
     company_branch_cost_multiplier: 1.8,
     company_branch_cost: 15000,
     branch_level_up_count: 10,
-    manager_cost: 5000000,
+    manager_cost: 22000000,
   },
 };

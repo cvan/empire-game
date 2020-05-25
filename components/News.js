@@ -61,6 +61,15 @@ export default (props) => {
     }
   }, [accountsState.balance]);
 
+  useEffect(() => {
+    if (state === ComponentState.CanManage) {
+      gameDispatch({
+        type: "set_app_badge",
+        payload: { key: "news", value: true },
+      });
+    }
+  }, [state]);
+
   return (
     <Box {...props}>
       <AppHead

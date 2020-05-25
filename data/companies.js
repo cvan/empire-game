@@ -1,5 +1,9 @@
 import sofa from "../images/sofa.jpg";
 import gamer from "../images/gamer.jpg";
+import commerce from "../images/commerce.jpg";
+import software from "../images/software.jpg";
+import vr from "../images/vr.jpg";
+import space from "../images/space.jpg";
 
 export default {
   Sofa: {
@@ -25,7 +29,8 @@ export default {
     manager_cost: 20,
   },
   Commerce: {
-    name: "E-Commerce Store",
+    name: "E-Commerce",
+    icon: commerce,
     production_time: 5000,
     unit_price: 125,
     company_purchase_cost: 1000,
@@ -35,7 +40,8 @@ export default {
     manager_cost: 10000,
   },
   SaaS: {
-    name: "Compression SaaS Startup",
+    name: "SaaS Startup",
+    icon: software,
     production_time: 10000,
     unit_price: 2000,
     company_purchase_cost: 7000,
@@ -45,7 +51,8 @@ export default {
     manager_cost: 50000,
   },
   VR: {
-    name: "VR Gaming Company",
+    name: "VR Simulation",
+    icon: vr,
     production_time: 5000,
     unit_price: 2000,
     company_purchase_cost: 284000,
@@ -56,6 +63,7 @@ export default {
   },
   Rocket: {
     name: "Space Launch",
+    icon: space,
     production_time: 120000,
     unit_price: 116000,
     company_purchase_cost: 20000000,

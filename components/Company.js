@@ -14,8 +14,10 @@ import {
   CompaniesDispatch,
 } from "../containers/Container";
 import CompanyIconButton from "./CompanyIconButton";
+import CompanyLevelProgress from "./CompanyLevelProgress";
 import BoxButton from "./BoxButton";
 import config from "../config";
+import theme from "../theme";
 
 const initialCompanyState = {
   branches: 1,
@@ -37,42 +39,6 @@ const reducer = (state, action) => {
       throw new Error();
   }
 };
-
-const LevelProgress = ({ value, children, ...props }) => (
-  <Box
-    position="relative"
-    height="1.5rem"
-    margin="auto"
-    width="5rem"
-    background="rgba(255,255,255,0.2)"
-    borderRadius="0.5rem"
-    overflow="hidden"
-    {...props}
-  >
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "1.5rem",
-        transform: `scaleX(${value})`,
-        transformOrigin: "0 0",
-        background: "#afbeca",
-      }}
-    />
-    <Box
-      position="absolute"
-      top="0"
-      left="0"
-      width="100%"
-      textAlign="center"
-      lineHeight="1.5rem"
-    >
-      {children}
-    </Box>
-  </Box>
-);
 
 export default ({
   id,
@@ -173,7 +139,13 @@ export default ({
   };
 
   return (
-    <Box height="100%" borderRadius="0.75rem" p="3" {...containerStyles}>
+    <Box
+      height="100%"
+      borderRadius="0.75rem"
+      py="3"
+      px="5"
+      {...containerStyles}
+    >
       {!purchased ? (
         <BoxButton
           disabled={!canBePurchased}
@@ -181,34 +153,47 @@ export default ({
             companiesDispatch({ type: "buy_company", payload: id })
           }
           textAlign="center"
+          width="100%"
+          height="100%"
         >
-          <Box fontWeight="bold">{name}</Box>
-          <CompanyIconButton
-            disabled={!canBePurchased}
-            icon={icon}
-            hasProgress={false}
-            {...iconConfig}
-          />
-          <Button
-            variantColor={canBePurchased ? "green" : "gray"}
-            fontWeight="bold"
-            fontSize="lg"
+          <Flex
+            width="100%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
           >
-            {company_purchase_cost === 0 ? (
-              "Start"
-            ) : (
-              <NumberFormat
-                value={company_purchase_cost}
-                {...config.numberFormat}
+            <Box>
+              <CompanyIconButton
+                disabled={!canBePurchased}
+                icon={icon}
+                hasProgress={false}
+                {...iconConfig}
               />
-            )}
-          </Button>
+            </Box>
+            <Box flex="1">
+              <Box fontWeight="bold">{name}</Box>
+              <Button
+                mt="0.5rem"
+                variantColor={canBePurchased ? "green" : "gray"}
+                fontWeight="bold"
+                fontSize="lg"
+              >
+                {company_purchase_cost === 0 ? (
+                  "Start"
+                ) : (
+                  <NumberFormat
+                    value={company_purchase_cost}
+                    {...config.numberFormat}
+                  />
+                )}
+              </Button>
+            </Box>
+          </Flex>
         </BoxButton>
       ) : (
         <Box textAlign="center">
-          <Flex>
+          <Flex height="100%">
             <Box>
-              <Box>${aggregateCost}</Box>
               <CompanyIconButton
                 disabled={state.selling}
                 icon={icon}
@@ -217,11 +202,22 @@ export default ({
                 animationControl={animationControl}
                 {...iconConfig}
               />
+              <CompanyLevelProgress
+                mt="0.5rem"
+                value={getLevelProgress(state.branches)}
+              >
+                {state.branches}
+              </CompanyLevelProgress>
             </Box>
 
-            <Box>
+            <Box flex="1">
               <Box fontWeight="bold">{name}</Box>
-              <Box id="countdown-timer">
+
+              <Box fontSize="xl" fontWeight="bold">
+                ${aggregateCost}
+              </Box>
+
+              <Box mt="0.5rem" id="countdown-timer" fontSize="sm">
                 <NumberFormat
                   displayType="text"
                   value={countdown}
@@ -229,25 +225,30 @@ export default ({
                 />
                 s&nbsp;
                 {state.level > 1 && (
-                  <Badge variantColor="green">{state.level}x</Badge>
+                  <Badge borderRadius="0.25rem" variantColor="gray">
+                    {state.level}x
+                  </Badge>
                 )}
               </Box>
 
-              <LevelProgress value={getLevelProgress(state.branches)}>
-                {state.branches}
-              </LevelProgress>
-
               <Button
-                mt="1rem"
+                mt="0.5rem"
                 disabled={accountsState.balance < branchCost}
                 onClick={() => buyBranch()}
                 borderRadius="0.5rem"
-                variantColor={
-                  accountsState.balance > branchCost ? "green" : "gray"
+                borderWidth={accountsState.balance < branchCost ? "1px" : "0"}
+                _hover="#276749"
+                background={
+                  accountsState.balance > branchCost ? "#38a169" : "transparent"
                 }
               >
-                Buy +1&nbsp;
-                <NumberFormat value={branchCost} {...config.numberFormat} />
+                Buy &nbsp;
+                <NumberFormat
+                  value={branchCost}
+                  decimalScale="2"
+                  fixedDecimalScale={true}
+                  {...config.numberFormat}
+                />
               </Button>
             </Box>
           </Flex>

@@ -122,10 +122,11 @@ export default (props) => {
 
         {state === ComponentState.CanManage && (
           <Box>
-            <p>
+            <Heading textAlign="center">Up'n Up!</Heading>
+            <Box mt="2rem">
               Hire a unicorn team to manage your highly profitable companies so
               you don't have to.
-            </p>
+            </Box>
             <Box mt="2rem">
               <Flex alignItems="center" justifyContent="center">
                 <Box>

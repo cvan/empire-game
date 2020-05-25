@@ -1,14 +1,12 @@
 import { Box, Heading, Image, Flex, Button } from "@chakra-ui/core";
-import AppHead from "./AppHead";
-import empire from "../images/empire.png";
-import managers from "../images/managers.png";
 import { useContext, useMemo, useReducer, useEffect } from "react";
 import {
   GameDispatch,
-  GameState,
   AccountsState,
   CompaniesState,
 } from "../containers/Container";
+import empire from "../images/empire.png";
+import managers from "../images/managers.png";
 
 // todo: this can move to container
 const ComponentState = Object.freeze({
@@ -30,7 +28,6 @@ const reducer = (state, action) => {
 };
 
 export default (props) => {
-  const gameState = useContext(GameState);
   const gameDispatch = useContext(GameDispatch);
   const accountsState = useContext(AccountsState);
   const companiesState = useContext(CompaniesState);
@@ -57,13 +54,22 @@ export default (props) => {
 
   return (
     <Box {...props}>
-      <Box maxWidth="30rem" m="auto" p="2rem">
+      <Flex
+        maxWidth="30rem"
+        m="auto"
+        p="2rem"
+        alignItems="center"
+        justifyContent="center"
+        height="100%"
+      >
         {state === ComponentState.Intro && (
-          <>
-            Ride profits all the way the moon by creating companies, increasing
-            profits and building a unicorn team to help you run your star
-            ventures.
-            {/* </Box> */}
+          <Box>
+            <Heading>Your tech startup dreams!</Heading>
+            <Box mt="1rem" display={["none", "block"]}>
+              Ride profits all the way to the moon by creating companies,
+              increasing profits and hiring a unicorn team to run it all while
+              you work on that moonshot!
+            </Box>
             <Box mt="2rem">
               <Flex alignItems="center" justifyContent="center">
                 <Box>
@@ -82,7 +88,10 @@ export default (props) => {
                   variantColor="green"
                   size="lg"
                   onClick={() => {
-                    gameDispatch({ type: "install_app", payload: "companies" });
+                    gameDispatch({
+                      type: "install_app",
+                      payload: "companies",
+                    });
                     dispatch({ type: "Install" });
                   }}
                 >
@@ -90,7 +99,7 @@ export default (props) => {
                 </Button>
               </Box>
             </Box>
-          </>
+          </Box>
         )}
 
         {state === ComponentState.Installed && (
@@ -103,9 +112,7 @@ export default (props) => {
               Megapreneur
             </Heading>
 
-            <Box mt="1rem" fontStyle="italic">
-              Installed!
-            </Box>
+            <Box fontStyle="italic">Installed!</Box>
 
             <Box mt="1rem">
               ...those billions aren't going to make themselves!
@@ -114,12 +121,11 @@ export default (props) => {
         )}
 
         {state === ComponentState.CanManage && (
-          <>
-            <Box mt="2rem">
+          <Box>
+            <p>
               Hire a unicorn team to manage your highly profitable companies so
               you don't have to.
-            </Box>
-
+            </p>
             <Box mt="2rem">
               <Flex alignItems="center" justifyContent="center">
                 <Box>
@@ -138,7 +144,10 @@ export default (props) => {
                   variantColor="green"
                   size="lg"
                   onClick={() => {
-                    gameDispatch({ type: "install_app", payload: "managers" });
+                    gameDispatch({
+                      type: "install_app",
+                      payload: "managers",
+                    });
                     dispatch({ type: "Managed" });
                   }}
                 >
@@ -146,9 +155,9 @@ export default (props) => {
                 </Button>
               </Box>
             </Box>
-          </>
+          </Box>
         )}
-      </Box>
+      </Flex>
     </Box>
   );
 };

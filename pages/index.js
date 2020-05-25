@@ -20,12 +20,10 @@ export default function Home() {
         }}
       >
         <CSSReset />
-
         <Head>
           <title>Empire OS</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         <Box padding={["0", "0", "1rem"]} width="100%" height="100%">
           <Container>
             <Box

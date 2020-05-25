@@ -7,6 +7,7 @@ import {
 } from "../containers/Container";
 import empire from "../images/empire.png";
 import managers from "../images/managers.png";
+import { FiArrowDown } from "react-icons/fi";
 
 // todo: this can move to container
 const ComponentState = Object.freeze({
@@ -117,6 +118,14 @@ export default (props) => {
             <Box mt="1rem">
               ...those billions aren't going to make themselves!
             </Box>
+
+            <Box textAlign="center" mt="3rem" fontSize="sm" color="grey">
+              Open from the Dock
+              <br />
+              <Box m="auto" width="2rem">
+                <FiArrowDown size="2rem" />
+              </Box>
+            </Box>
           </Box>
         )}
 
@@ -154,6 +163,30 @@ export default (props) => {
                 >
                   INSTALL APP
                 </Button>
+              </Box>
+            </Box>
+          </Box>
+        )}
+
+        {state === ComponentState.Managed && (
+          <Box textAlign="center">
+            <Box textAlign="center" width="4rem" m="auto">
+              <Image src={managers} />
+            </Box>
+
+            <Heading fontSize="xl" mt="2rem" textAlign="center">
+              Mega Hire
+            </Heading>
+
+            <Box fontStyle="italic">Installed!</Box>
+
+            <Box mt="1rem">Move Fast, Break Things!</Box>
+
+            <Box textAlign="center" mt="3rem" fontSize="sm" color="grey">
+              Open from the Dock
+              <br />
+              <Box m="auto" width="2rem">
+                <FiArrowDown size="2rem" />
               </Box>
             </Box>
           </Box>

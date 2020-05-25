@@ -17,7 +17,6 @@ import CompanyIconButton from "./CompanyIconButton";
 import CompanyLevelProgress from "./CompanyLevelProgress";
 import BoxButton from "./BoxButton";
 import config from "../config";
-import theme from "../theme";
 
 const initialCompanyState = {
   branches: 1,
@@ -174,6 +173,8 @@ export default ({
               <Box fontWeight="bold">{name}</Box>
               <Button
                 mt="0.5rem"
+                minWidth="6rem"
+                borderRadius="0.5rem"
                 variantColor={canBePurchased ? "green" : "gray"}
                 fontWeight="bold"
                 fontSize="lg"

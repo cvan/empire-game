@@ -65,7 +65,11 @@ export default (props) => {
 
   return (
     <Box {...props}>
-      <AppHead background="white" foreground="#9a9a9a" position="absolute" />
+      <AppHead
+        background="transparent"
+        foreground="#9a9a9a"
+        position="absolute"
+      />
       <Flex
         maxWidth="30rem"
         m="auto"

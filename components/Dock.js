@@ -1,6 +1,17 @@
 import React, { useContext } from "react";
 import { Image, Flex, Box, Badge } from "@chakra-ui/core";
+import { css, keyframes } from "@emotion/core";
 import { GameState, GameDispatch } from "../containers/Container";
+
+const bounce = keyframes`
+  from, 5%, 25%, 45%, to {
+    transform: translate3d(0,0,0);
+  }
+
+  35% {
+    transform: translate3d(0, -15px, 0);
+  }
+`;
 
 export default ({ size = "4rem", ...props }) => {
   const { menu } = useContext(GameState);
@@ -47,6 +58,9 @@ export default ({ size = "4rem", ...props }) => {
                 cursor="pointer"
                 width="100%"
                 height="100%"
+                css={{
+                  animation: menu[key].bounce && `${bounce} 2s ease infinite`,
+                }}
               />
               {menu[key].badge && (
                 <Badge

@@ -55,6 +55,8 @@ const companyReducer = (state, action) => {
 const gameReducer = (state, action) => {
   switch (action.type) {
     case "open_menu": {
+      state.menu[action.payload].bounce = false;
+      state.menu[action.payload].badge = false;
       return {
         ...state,
         current_menu: action.payload,
@@ -62,12 +64,14 @@ const gameReducer = (state, action) => {
     }
     case "install_app": {
       state.menu[action.payload].installed = true;
+      state.menu[action.payload].bounce = true;
       return {
         ...state,
       };
     }
     case "set_app_badge": {
       state.menu[action.payload.key].badge = action.payload.value;
+      state.menu[action.payload.key].bounce = action.payload.value;
       return { ...state };
     }
     default:

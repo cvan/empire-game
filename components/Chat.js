@@ -42,6 +42,9 @@ const Reply = ({ children, typing }) => {
   );
 };
 
+// note:
+// We've imported the chat styles from myzel-chat-bubble npm package.
+// See /pages/_app.js for inclusion.
 export default (props) => {
   return (
     <Box {...props}>

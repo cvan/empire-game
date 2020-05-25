@@ -24,11 +24,10 @@ export default ({ children, ...props }) => {
 
   const setStyleProps = (menuKey) => {
     return {
-      visibility: current_menu === menuKey ? "visible" : "hidden",
-
-      // todo: we'll use props here to manage transitions for apps as well.
-
       ...defaultAppStyles,
+      transition: "transform 0.2s ease-in-out",
+      transformOrigin: "bottom",
+      transform: current_menu === menuKey ? "scale(1)" : "scale(0)",
     };
   };
 

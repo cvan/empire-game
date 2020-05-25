@@ -53,7 +53,6 @@ const companyReducer = (state, action) => {
 };
 
 const gameReducer = (state, action) => {
-  console.log(state);
   switch (action.type) {
     case "open_menu": {
       return {

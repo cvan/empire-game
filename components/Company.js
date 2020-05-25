@@ -55,18 +55,32 @@ export default ({
   const accountsDispatch = useContext(AccountsDispatch);
   const accountsState = useContext(AccountsState);
   const companiesDispatch = useContext(CompaniesDispatch);
+  const countdownInterval = useRef(null);
+  const animationControl = useAnimation();
 
   const [state, dispatch] = useReducer(reducer, initialCompanyState);
 
-  useEffect(() => {
-    if (purchased) {
-      accountsDispatch({ type: "debit", payload: company_purchase_cost });
-    }
-  }, [purchased]);
-
   const duration = production_time / state.level / 1000;
-  const countdownInterval = useRef(null);
   const [countdown, setCountdown] = useState(duration);
+
+  const aggregateCost = state.branches * unit_price;
+  const branchCost =
+    state.branches * company_branch_cost * company_branch_cost_multiplier;
+  const canBePurchased = accountsState.balance >= company_purchase_cost;
+
+  const getLevelProgress = (branches) =>
+    (branches % branch_level_up_count) / branch_level_up_count;
+
+  const sell = async () => {
+    dispatch({ type: "selling", payload: true });
+    await animationControl.start({
+      transition: { duration },
+      scaleY: [0, 1],
+      originY: [1, 1],
+    });
+    dispatch({ type: "selling", payload: false });
+    accountsDispatch({ type: "credit", payload: aggregateCost });
+  };
 
   const onFinishSale = () => {
     // if we've got a manager on board, we'll continue the gravy train!
@@ -74,6 +88,20 @@ export default ({
       sell();
     }
   };
+
+  const buyBranch = () => {
+    if (getLevelProgress(state.branches + 1) === 0) {
+      dispatch({ type: "add_level" });
+    }
+    dispatch({ type: "buy_branch" });
+    accountsDispatch({ type: "debit", payload: branchCost });
+  };
+
+  useEffect(() => {
+    if (purchased) {
+      accountsDispatch({ type: "debit", payload: company_purchase_cost });
+    }
+  }, [purchased]);
 
   useEffect(() => setCountdown(duration), [state.level]);
 
@@ -93,36 +121,6 @@ export default ({
       clearInterval(countdownInterval.current);
     };
   }, [state.selling, manager]);
-
-  const animationControl = useAnimation();
-  const aggregateCost = state.branches * unit_price;
-
-  const sell = async () => {
-    dispatch({ type: "selling", payload: true });
-    await animationControl.start({
-      transition: { duration },
-      scaleY: [0, 1],
-      originY: [1, 1],
-    });
-    dispatch({ type: "selling", payload: false });
-    accountsDispatch({ type: "credit", payload: aggregateCost });
-  };
-
-  const getLevelProgress = (branches) =>
-    (branches % branch_level_up_count) / branch_level_up_count;
-
-  const branchCost =
-    state.branches * company_branch_cost * company_branch_cost_multiplier;
-
-  const buyBranch = () => {
-    if (getLevelProgress(state.branches + 1) === 0) {
-      dispatch({ type: "add_level" });
-    }
-    dispatch({ type: "buy_branch" });
-    accountsDispatch({ type: "debit", payload: branchCost });
-  };
-
-  const canBePurchased = accountsState.balance >= company_purchase_cost;
 
   const containerStyles = {
     borderWidth: "1px",

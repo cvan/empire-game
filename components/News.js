@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Flex, Button } from "@chakra-ui/core";
+import { Box, Heading, Image, Flex } from "@chakra-ui/core";
 import { useContext, useMemo, useReducer, useEffect } from "react";
 import {
   GameDispatch,
@@ -6,9 +6,10 @@ import {
   CompaniesState,
 } from "../containers/Container";
 import AppHead from "./AppHead";
+import OpenFromDock from "./OpenFromDock";
+import AppInstallButton from "./AppInstallButton";
 import empire from "../images/empire.png";
 import managers from "../images/managers.png";
-import { FiArrowDown } from "react-icons/fi";
 
 // todo: this can move to container
 const ComponentState = Object.freeze({
@@ -93,16 +94,13 @@ export default (props) => {
                 </Box>
                 <Box px="1rem">
                   <Box fontWeight="bold">Megapreneur</Box>
-
                   <Box color="grey" fontSize="sm">
                     Sweet Success Inc.
                   </Box>
                 </Box>
               </Flex>
               <Box textAlign="center" mt="2rem">
-                <Button
-                  variantColor="green"
-                  size="lg"
+                <AppInstallButton
                   onClick={() => {
                     gameDispatch({
                       type: "install_app",
@@ -110,9 +108,7 @@ export default (props) => {
                     });
                     dispatch({ type: "Install" });
                   }}
-                >
-                  INSTALL APP
-                </Button>
+                />
               </Box>
             </Box>
           </Box>
@@ -123,7 +119,6 @@ export default (props) => {
             <Box textAlign="center" width="4rem" m="auto">
               <Image src={empire} />
             </Box>
-
             <Heading fontSize="xl" mt="2rem" textAlign="center">
               Megapreneur
             </Heading>
@@ -134,13 +129,7 @@ export default (props) => {
               ...those billions aren't going to make themselves!
             </Box>
 
-            <Box textAlign="center" mt="3rem" fontSize="sm" color="grey">
-              Open from the Dock
-              <br />
-              <Box m="auto" width="2rem">
-                <FiArrowDown size="2rem" />
-              </Box>
-            </Box>
+            <OpenFromDock />
           </Box>
         )}
 
@@ -158,16 +147,13 @@ export default (props) => {
                 </Box>
                 <Box px="1rem">
                   <Box fontWeight="bold">Mega Hire</Box>
-
                   <Box color="grey" fontSize="sm">
                     Sweet Success Inc.
                   </Box>
                 </Box>
               </Flex>
               <Box textAlign="center" mt="2rem">
-                <Button
-                  variantColor="green"
-                  size="lg"
+                <AppInstallButton
                   onClick={() => {
                     gameDispatch({
                       type: "install_app",
@@ -175,9 +161,7 @@ export default (props) => {
                     });
                     dispatch({ type: "Managed" });
                   }}
-                >
-                  INSTALL APP
-                </Button>
+                />
               </Box>
             </Box>
           </Box>
@@ -192,18 +176,11 @@ export default (props) => {
             <Heading fontSize="xl" mt="2rem" textAlign="center">
               Mega Hire
             </Heading>
-
             <Box fontStyle="italic">Installed!</Box>
 
             <Box mt="1rem">Move Fast, Break Things!</Box>
 
-            <Box textAlign="center" mt="3rem" fontSize="sm" color="grey">
-              Open from the Dock
-              <br />
-              <Box m="auto" width="2rem">
-                <FiArrowDown size="2rem" />
-              </Box>
-            </Box>
+            <OpenFromDock />
           </Box>
         )}
       </Flex>

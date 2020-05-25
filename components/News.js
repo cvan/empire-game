@@ -60,13 +60,9 @@ export default (props) => {
       <Box maxWidth="30rem" m="auto" p="2rem">
         {state === ComponentState.Intro && (
           <>
-            {/* <Heading fontSize="xl" textAlign="center">
-              Empire
-            </Heading> */}
-            {/* <Box mt="2rem"> */}
-            Ride your profits all the way the top by creating companies,
-            increasing profits and building a unicorn team to help you run your
-            star ventures.
+            Ride profits all the way the moon by creating companies, increasing
+            profits and building a unicorn team to help you run your star
+            ventures.
             {/* </Box> */}
             <Box mt="2rem">
               <Flex alignItems="center" justifyContent="center">
@@ -119,13 +115,9 @@ export default (props) => {
 
         {state === ComponentState.CanManage && (
           <>
-            <Heading fontSize="xl" textAlign="center">
-              Mega Manager
-            </Heading>
-
             <Box mt="2rem">
-              Hire Unicorn team to manage your portfolio of highly profitable
-              companies.
+              Hire a unicorn team to manage your highly profitable companies so
+              you don't have to.
             </Box>
 
             <Box mt="2rem">
@@ -134,7 +126,7 @@ export default (props) => {
                   <Image src={managers} width="4rem" />
                 </Box>
                 <Box px="1rem">
-                  <Box fontWeight="bold">Hire</Box>
+                  <Box fontWeight="bold">Mega Hire</Box>
 
                   <Box color="grey" fontSize="sm">
                     Sweet Success Inc.

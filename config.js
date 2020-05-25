@@ -2,7 +2,7 @@ export default {
   numberFormat: {
     displayType: "text",
     decimalScale: 2,
-    fixedDecimalScale: true,
+    fixedDecimalScale: false,
     thousandSeparator: true,
   },
 };

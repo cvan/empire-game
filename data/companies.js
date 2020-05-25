@@ -1,6 +1,10 @@
+import sofa from "../images/sofa.jpg";
+import gamer from "../images/gamer.jpg";
+
 export default {
   Sofa: {
     name: "Sofa Change",
+    icon: sofa,
     production_time: 1000,
     unit_price: 1,
     company_purchase_cost: 0, // price at which additional companies can be purchased
@@ -11,6 +15,7 @@ export default {
   },
   Gamer: {
     name: "Pro Gamer",
+    icon: gamer,
     production_time: 3000,
     unit_price: 300,
     company_purchase_cost: 10,

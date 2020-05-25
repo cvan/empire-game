@@ -3,7 +3,7 @@ import { FiList } from "react-icons/fi";
 
 export default ({ children }) => (
   <Box
-    background="rgba(255,255,255,0.4)"
+    background="rgba(255,255,255,0.8)"
     textAlign="center"
     height="2rem"
     lineHeight="2rem"

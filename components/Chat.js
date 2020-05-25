@@ -35,7 +35,7 @@ const Reply = ({ children, typing }) => {
 export default (props) => {
   return (
     <Box {...props}>
-      <AppHead>Chat</AppHead>
+      <AppHead background="#8dcc46">Chat</AppHead>
       <div className={styles["bubble-container"]}>
         <div className={styles["bubble-wrap"]}>
           <Say>Saying something</Say>

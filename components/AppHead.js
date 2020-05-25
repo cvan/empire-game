@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/core";
 
-export default ({ children }) => (
+export default ({ children, background, ...props }) => (
   <Box
-    background="#3965a5"
+    background={background || "#3965a5"}
     textAlign="center"
     height="2.5rem"
     lineHeight="2.5rem"

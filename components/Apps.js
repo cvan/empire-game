@@ -39,7 +39,7 @@ export default ({ children, ...props }) => {
       alignItems="center"
       justifyContent="center"
       height="100%"
-      mb="10rem"
+      mb="7.5rem"
     >
       <News {...setStyleProps("news")} />
       <Companies {...setStyleProps("companies")} />

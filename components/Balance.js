@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AccountsState } from "../containers/Container";
-import { Box } from "@chakra-ui/core";
+import { Box, Text } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
 import config from "../config";
 
@@ -8,12 +8,13 @@ export default (props) => {
   const { balance } = useContext(AccountsState);
 
   return (
-    <Box {...props} py="1rem">
-      <Box textAlign="center" fontSize="3rem" fontWeight="bold">
-        <NumberFormat value={balance} {...config.numberFormat} />
-      </Box>
-
+    <Box {...props}>
       <Box textAlign="center">
+        <Text fontSize="3rem" fontWeight="bold">
+          <NumberFormat value={balance} {...config.numberFormat} />
+        </Text>
+      </Box>
+      <Box textAlign="center" pb="3">
         {balance < 1000 && "Parents place is pretty nice 🙄"}
         {balance > 1000 && balance < 10000 && "#Vanlife"}
         {balance > 10000 && balance < 100000 && "Ballin'"}

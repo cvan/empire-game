@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Image, Flex } from "@chakra-ui/core";
+import { Image, Flex } from "@chakra-ui/core";
 import { GameState, GameDispatch } from "../containers/Container";
 
 export default (props) => {
@@ -12,7 +12,7 @@ export default (props) => {
       bottom="0"
       width="100%"
       background="rgba(255,255,255,0.3)"
-      p="2"
+      p="1"
       justifyContent="center"
       {...props}
     >
@@ -29,6 +29,7 @@ export default (props) => {
               maxWidth="5rem"
               cursor="pointer"
               width="4rem"
+              height="4rem"
             />
           )
       )}

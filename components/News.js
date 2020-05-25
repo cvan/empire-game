@@ -47,28 +47,27 @@ export default (props) => {
   }, []);
 
   useEffect(() => {
-    if (accountsState.balance > minManagerCost) {
+    if (
+      accountsState.balance > minManagerCost &&
+      state !== ComponentState.Managed
+    ) {
       dispatch({ type: "CanManage" });
     }
   }, [accountsState.balance]);
 
   return (
     <Box {...props}>
-      <AppHead>News</AppHead>
-
       <Box maxWidth="30rem" m="auto" p="2rem">
         {state === ComponentState.Intro && (
           <>
-            <Heading fontSize="xl" textAlign="center">
+            {/* <Heading fontSize="xl" textAlign="center">
               Empire
-            </Heading>
-
-            <Box mt="2rem">
-              Ride your profits all the way the top by creating companies,
-              increasing profits and building a unicorn team to help you run
-              your star ventures.
-            </Box>
-
+            </Heading> */}
+            {/* <Box mt="2rem"> */}
+            Ride your profits all the way the top by creating companies,
+            increasing profits and building a unicorn team to help you run your
+            star ventures.
+            {/* </Box> */}
             <Box mt="2rem">
               <Flex alignItems="center" justifyContent="center">
                 <Box>

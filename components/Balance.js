@@ -15,7 +15,7 @@ export default (props) => {
         </Text>
       </Box>
       <Box textAlign="center" pb="3">
-        {balance < 1000 && "Parents place is pretty nice 🙄"}
+        {balance < 1000 && "Parents' place is pretty nice 🙄"}
         {balance > 1000 && balance < 10000 && "#Vanlife"}
         {balance > 10000 && balance < 100000 && "💰 Ballin' 💰"}
         {balance > 100000 && balance < 500000 && "Truffles are pretty dope!"}

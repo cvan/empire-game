@@ -3,7 +3,7 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef,
+  useRef
 } from "react";
 import { Box, Flex, Badge, Button } from "@chakra-ui/core";
 import NumberFormat from "react-number-format";
@@ -11,7 +11,7 @@ import { useAnimation } from "framer-motion";
 import {
   AccountsDispatch,
   AccountsState,
-  CompaniesDispatch,
+  CompaniesDispatch
 } from "../containers/Container";
 import CompanyIconButton from "./CompanyIconButton";
 import CompanyLevelProgress from "./CompanyLevelProgress";
@@ -21,7 +21,7 @@ import config from "../config";
 const initialCompanyState = {
   branches: 1,
   level: 1,
-  selling: false,
+  selling: false
 };
 
 const reducer = (state, action) => {
@@ -50,7 +50,7 @@ export default ({
   production_time,
   branch_level_up_count,
   manager,
-  purchased,
+  purchased
 }) => {
   const accountsDispatch = useContext(AccountsDispatch);
   const accountsState = useContext(AccountsState);
@@ -76,7 +76,7 @@ export default ({
     await animationControl.start({
       transition: { duration },
       scaleY: [0, 1],
-      originY: [1, 1],
+      originY: [1, 1]
     });
     dispatch({ type: "selling", payload: false });
     accountsDispatch({ type: "credit", payload: aggregateCost });
@@ -128,7 +128,7 @@ export default ({
     background: canBePurchased || purchased ? "#2a4361" : "white",
     color: canBePurchased || purchased ? "white" : "black",
     boxShadow:
-      canBePurchased || (purchased && "3px 3px 10px 0px rgba(0,0,0,0.24)"),
+      canBePurchased || (purchased && "3px 3px 10px 0px rgba(0,0,0,0.24)")
   };
 
   return (
@@ -146,7 +146,6 @@ export default ({
             companiesDispatch({ type: "buy_company", payload: id })
           }
           textAlign="center"
-          width="100%"
           height="100%"
         >
           <Flex
@@ -165,8 +164,10 @@ export default ({
             <Box flex="1">
               <Box fontWeight="bold">{name}</Box>
               <Button
+                _focus={{ boxShadow: "none" }}
                 mt="0.5rem"
-                minWidth="6rem"
+                maxWidth="6rem"
+                minWidth="2rem"
                 borderRadius="0.5rem"
                 variantColor={canBePurchased ? "blue" : "gray"}
                 fontWeight="bold"
@@ -225,6 +226,7 @@ export default ({
               </Box>
 
               <Button
+                _focus={{ boxShadow: "none" }}
                 mt="0.5rem"
                 disabled={accountsState.balance < branchCost}
                 onClick={() => buyBranch()}

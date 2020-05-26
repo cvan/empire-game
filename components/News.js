@@ -3,7 +3,7 @@ import { useContext, useMemo, useReducer, useEffect } from "react";
 import {
   GameDispatch,
   AccountsState,
-  CompaniesState,
+  CompaniesState
 } from "../containers/Container";
 import AppHead from "./AppHead";
 import OpenFromDock from "./OpenFromDock";
@@ -16,7 +16,7 @@ const ComponentState = Object.freeze({
   Intro: "INTRO",
   Installed: "INSTALLED",
   CanManage: "CAN_MANAGE",
-  Managed: "MANAGED",
+  Managed: "MANAGED"
 });
 
 const reducer = (state, action) => {
@@ -56,7 +56,7 @@ export default (props) => {
       dispatch({ type: "CanManage" });
       gameDispatch({
         type: "set_app_badge",
-        payload: { key: "news", value: true },
+        payload: { key: "news", value: true }
       });
     }
   }, [accountsState.balance]);
@@ -65,7 +65,7 @@ export default (props) => {
     if (state === ComponentState.CanManage) {
       gameDispatch({
         type: "set_app_badge",
-        payload: { key: "news", value: true },
+        payload: { key: "news", value: true }
       });
     }
   }, [state]);
@@ -110,7 +110,7 @@ export default (props) => {
                   onClick={() => {
                     gameDispatch({
                       type: "install_app",
-                      payload: "companies",
+                      payload: "companies"
                     });
                     dispatch({ type: "Install" });
                   }}
@@ -163,7 +163,7 @@ export default (props) => {
                   onClick={() => {
                     gameDispatch({
                       type: "install_app",
-                      payload: "managers",
+                      payload: "managers"
                     });
                     dispatch({ type: "Managed" });
                   }}

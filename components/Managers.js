@@ -5,7 +5,7 @@ import {
   AccountsDispatch,
   AccountsState,
   CompaniesState,
-  CompaniesDispatch,
+  CompaniesDispatch
 } from "../containers/Container";
 import AppHead from "./AppHead";
 import NumberFormat from "react-number-format";
@@ -33,7 +33,7 @@ export default (props) => {
           const enabled = company.manager_cost < accountsState.balance;
           const elementProps = enabled && {
             background: "#2a4361",
-            color: "white",
+            color: "white"
           };
 
           if (!company.manager) {
@@ -61,7 +61,11 @@ export default (props) => {
                       Manager runs&nbsp;
                       <em>{companies[key].name}</em>
                     </Box>
-                    <Button variantColor={enabled ? "blue" : "gray"} mt="2">
+                    <Button
+                      _focus={{ boxShadow: "none" }}
+                      variantColor={enabled ? "blue" : "gray"}
+                      mt="2"
+                    >
                       Hire for &nbsp;
                       <NumberFormat
                         value={companies[key].manager_cost}

@@ -16,13 +16,18 @@ export default function Home() {
       <ThemeProvider
         theme={{
           ...theme,
-          customTheme,
+          customTheme
         }}
       >
         <CSSReset />
         <Head>
           <title>Empire OS</title>
           <link rel="icon" href="/favicon.ico" />
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+          />
+          <meta name="theme-color" content="#000" />
         </Head>
         <Box padding={["0", "0", "1rem"]} width="100%" height="100%">
           <Container>
@@ -69,6 +74,54 @@ export default function Home() {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           background: #000;
+
+          /* Disable prompt upon long-tapping on iOS. */
+          -webkit-touch-callout: none;
+
+          /* Disable text-cursor highlighting on iOS. */
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+
+          /* Disable text-cursor highlighting on tap on iOS. */
+          -webkit-highlight: none;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+          /* Disable tap-to-zoom on iOS. */
+          touch-action: none;
+
+          /* Prevent page from scrolling vertically. */
+          position: fixed;
+        }
+
+        input,
+        textarea {
+          /* Re-enable text-cursor selection on iOS. */
+          -webkit-user-select: text;
+        }
+
+        .clearfix::after {
+          clear: both;
+          content: "";
+          display: table;
+        }
+
+        .box-say {
+          padding-top: 1px;
+        }
+
+        .box-say + .box-reply {
+          padding-top: 6px;
+        }
+
+        .box-reply + .box-say {
+          padding-top: 8px;
+        }
+
+        .bubble.reply.reply-freeform {
+          margin-bottom: 2px;
         }
       `}</style>
     </>

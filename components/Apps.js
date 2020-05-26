@@ -13,10 +13,9 @@ const defaultAppStyles = {
   m: "auto",
   width: "90%",
   height: "100%",
-  background: "white",
   borderRadius: "0.7rem",
   overflow: "hidden",
-  boxShadow: "3px 3px 10px 0px rgba(0,0,0,0.24)",
+  boxShadow: "3px 3px 10px 0px rgba(0,0,0,0.24)"
 };
 
 export default ({ children, ...props }) => {
@@ -25,9 +24,11 @@ export default ({ children, ...props }) => {
   const setStyleProps = (menuKey) => {
     return {
       ...defaultAppStyles,
-      transition: "transform 0.2s ease-in-out",
+      background: current_menu === menuKey ? "white" : "transparent",
+      transition: "transform 0.2s ease-in-out, opacity 0.05s ease-in-out 0.15s",
+      opacity: current_menu === menuKey ? "1" : "0",
       transformOrigin: "bottom",
-      transform: current_menu === menuKey ? "scale(1)" : "scale(0)",
+      transform: current_menu === menuKey ? "scale(1)" : "scale(0)"
     };
   };
 

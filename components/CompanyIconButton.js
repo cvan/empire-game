@@ -35,7 +35,7 @@ export default ({
           width: `${sizedWithProgress}rem`,
           height: `${sizedWithProgress}rem`,
           borderRadius: `${sizedWithProgress / 2}rem`,
-          overflow: "hidden",
+          overflow: "hidden"
         }}
       >
         <motion.div
@@ -44,7 +44,7 @@ export default ({
           style={{
             background: "#afbeca",
             width: "100%",
-            height: "100%",
+            height: "100%"
           }}
         />
       </div>
@@ -56,7 +56,7 @@ export default ({
           top: `${offsetWithProgress}rem`,
           left: `${offsetWithProgress}rem`,
           borderRadius: `${size / 2}rem`,
-          overflow: "hidden",
+          overflow: "hidden"
         }}
       >
         <CompanyIcon src={icon} width="100%" height="100%" />

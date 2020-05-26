@@ -14,12 +14,11 @@ const Say = ({ children, typing }) => {
   }, [content]);
 
   return (
-    <Box>
+    <Box className="clearfix box-say">
       <div
         className="bubble say"
         ref={container}
         style={{
-          whiteSpace: "nowrap",
           width,
         }}
       >
@@ -33,7 +32,7 @@ const Say = ({ children, typing }) => {
 
 const Reply = ({ children, typing }) => {
   return (
-    <Box>
+    <Box className="clearfix box-reply">
       <div className="bubble reply reply-freeform say">
         <span className="bubble-content">
           <span className="bubble-button bubble-pick">{children}</span>
@@ -54,22 +53,25 @@ export default (props) => {
     <Box {...props}>
       <AppHead background="#8dcc46">Chat</AppHead>
 
-      <div className="bubble-container" style={{ height: "100%" }}>
-        <div className="bubble-wrap">
+      <div
+        className="bubble-container"
+        style={{
+          height: "100%",
+          overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        <div className="bubble-wrap" style={{ bottom: "18px" }}>
           <Say>🤙</Say>
-          <Say>
-            Hey! How goes it? You have
-            <br />
-            the lowdown on this project?
-          </Say>
+          <Say>Hey! How goes it? You have the lowdown on this project?</Say>
           <Reply>Pretty good thanks. Yeah, here you go</Reply>
           <Reply>
             <Link href="https://github.com/caseyyee/empire-game" isExternal>
-              🛠&nbsp; Empire Game Github
+              🛠 Empire Game GitHub
             </Link>
           </Reply>
           <Reply>
-            Inpsired by
+            Inpsired by{" "}
             <Link
               href="http://en.gameslol.net/adventure-capitalist-1086.html"
               isExternal
@@ -78,19 +80,16 @@ export default (props) => {
             </Link>
           </Reply>
           <Reply>It's a pretty rad game</Reply>
-          <Say>
-            You should take a look
-            <br />
-            at Casey's Site.
+          <Say style={{ marginTop: "12px" }}>
+            You should take a look at Casey's Site.
           </Say>
           <Say>
             <Link href="https://github.com/caseyyee/empire-game" isExternal>
-              👀 &nbsp; caseyyee.com
+              👀 caseyyee.com
             </Link>
           </Say>
           <Reply>😁&nbsp;😁&nbsp;😁</Reply>
           <Reply>Cool. Will do!</Reply>
-
           <Say>💥</Say>
         </div>
       </div>

@@ -7,10 +7,10 @@ import AppHead from "./AppHead";
 export default (props) => {
   const companies = useContext(CompaniesState);
   return (
-    <Box {...props} overflow="auto">
+    <Box {...props}>
       <AppHead background="#da201a">Megapreneur</AppHead>
       <Grid
-        templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
+        templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(2, 1fr)"]}
         p="3"
         gap="2"
       >

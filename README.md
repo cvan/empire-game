@@ -50,8 +50,10 @@
 
 ## Some additional thoughts
 
-* React seems like a pretty good solution for this game given how state heavy the app is, my own familiarity using it, and the time constraints on the project.
-* There are a lot of performance optimizations that can be done around component and state updates.  This is particularly the case for game account balances.  Though this seemed quite serviceable for an MVP.
+* I thnk overall, React seems like a good solution for this game given how state heavy the app is, my own familiarity using it, and the time constraints on the project. It certainly allows me to move fast. Especially with styling, layout responsiveness.
+* There are a lot of performance optimizations that can be done around component and state updates, primarily around updating and listening for state changes in the balance.  A different approach would work much more efficiently.
+* Would I use React again?  For most most bits, yes. Afformentioned styling, layout and responsiveness are pretty great. Though I would eject from React for managing the balance.
+
 
 # Local Development
 
